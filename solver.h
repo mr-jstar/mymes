@@ -9,10 +9,14 @@ typedef struct {
 
 matrix_t *create_matrix( int n, int m );
 
-int set_entry( matrix_t *m, int i, int j, double v );
+double get_entry( matrix_t *mat, int i, int j );
 
-int add_to_entry( matrix_t *m, int i, int j, double v );
+int set_entry( matrix_t *mat, int i, int j, double v ); 
 
-double *solve( matrix_t h, double *r );
+int add_to_entry( matrix_t *mat, int i, int j, double v ); 
+
+double * mul_mat_vec( matrix_t *mat, double *vec, double *res );
+
+double *solve( matrix_t *h, double *r, double *x ); 
 
 #endif
