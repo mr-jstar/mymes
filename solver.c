@@ -123,11 +123,37 @@ static int iter_solver( matrix_t *h, double *r, double *x, double prec, int maxi
 	return res_i > prec;   // 0 == success, 1 == fail
 }
 
+int gauss_elim( matrix_t *h, double *r, double *x ) {
+	int n = h->n;
+	if( h->n != h->m )
+		return 1;
+	for( int k = 0; k < n-1; k++ ) {
+		for( int w= k+1; w < n; w++ ) {
+			double wsp = get_entry( h, w, k ) / get_entry( h, k, k );
+			set_entry( h, w, k, 0.0 );
+			for( int j= k+1; j < n; j++ )
+				add_to_entry( h, w, j, -wsp*get_entry( h, k, j ) );
+			r[w] -= wsp * r[k];
+		}
+	}
+	for( int w= n-1; w >= 0; w-- ) {
+		double suma = 0;
+		for( int k = w+1; k < n; k++ )
+			suma += get_entry(h,w,k)*x[k];
+		x[w] = ( r[w] - suma ) / get_entry(h,w,w);
+	}
+	return 0;
+}
+
 
 int solve( matrix_t *h, double *r, double *x ) 
 {
+#if 0
 	int iter;
 	int fail= iter_solver( h, r, x, 1e-12, 10*h->n, &iter, NULL );
 	printf( "Jacobi did %d iterations result=%s\n", iter, (fail?"FAIL":"success") );
 	return fail;
+#else
+	gauss_elim( h, r, x );
+#endif
 }
