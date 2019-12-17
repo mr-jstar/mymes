@@ -30,12 +30,14 @@ int main( int argc, char **argv ) {
 				fprintf( stderr, "%s: get_entry not working\n", argv[0] );
 				return 1;
 			}
-			if( add_to_entry( m, i, j, rand()/RAND_MAX ) != 0 ) {
+			if( add_to_entry( m, i, j, (double)rand()/RAND_MAX ) != 0 ) {
 				fprintf( stderr, "%s: add_to_entry not working\n", argv[0] );
 				return 1;
 			}
 		}
 	}
+	for( int i= 0; i < n; i++ )
+		set_entry( m, i, i, 100*get_entry( m, i, i ) );
 
 	mul_mat_vec( m, x, r );
 
@@ -48,6 +50,8 @@ int main( int argc, char **argv ) {
 			fprintf( stderr, "%s: mul_mat_vec or solve not working\n", argv[0] );
 			return 1;
 		}
+
+	delete_matrix( m );
 
 	return 0;
 }
