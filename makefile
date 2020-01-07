@@ -1,6 +1,6 @@
 COPT = -ggdb
 
-test: test_solve test_mesh
+test: test_solve test_sm test_mesh
 
 test_solve: solver.o test_solver.o
 	$(CC) $(COPT) -o $@  $^  -lm
@@ -8,6 +8,13 @@ test_solve: solver.o test_solver.o
 
 solver.o: solver.c solver.h
 test_solver.o: test_solver.c solver.h
+
+test_sm: sm.o test_sm.o
+	$(CC) $(COPT) -o $@  $^  -lm
+	./$@
+
+sm.o: sm.c sm.h
+test_sm.o: test_sm.c sm.h
 
 test_mesh: test_meshreader.o mesh.o okno.1.node okno.1.ele
 	$(CC) $(COPT) -o $@  test_meshreader.o mesh.o  -lm
