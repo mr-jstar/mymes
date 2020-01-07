@@ -25,3 +25,7 @@ mesh.o: mesh.c mesh.h
 
 okno.1.node okno1.ele: okno.poly
 	triangle -pqa0.01 okno.poly
+
+clean:
+	-rm *.o
+	-rm test_solve test_sm test_mesh
