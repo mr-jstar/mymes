@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 	mesh_t mesh;
 	int res;
     	if( (res= read_triangle_mesh(argv[1], &mesh)) != 0 ) {
-		printf( "Mesh reader failed, err code = %d (see mesh.c for explanation)\n", res );
+		printf( "%s: Mesh reader failed, err code = %d (see mesh.c for explanation)\n", argv[0], res );
 		return 1;
 	}
 	if( mesh.nodes->nn <= 0 ) {
